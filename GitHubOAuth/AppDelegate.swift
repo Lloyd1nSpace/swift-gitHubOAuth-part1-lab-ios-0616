@@ -18,7 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-
-
+    
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        guard let value = options["UIApplicationOpenURLOptionsSourceApplicationKey"] as? String else {fatalError("Couldn't pull String value from options Dictionary")}
+        
+        if value == "com.apple.SafariViewService" {
+            NSNotificationCenter.defaultCenter().postNotificationName("HEY! SOMETHING HAPPENED!", object: Notification.closeSafariVC)
+            return true
+        }
+        return false
+    }
 }
-
